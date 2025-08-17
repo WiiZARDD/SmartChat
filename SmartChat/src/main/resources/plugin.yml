@@ -1,0 +1,111 @@
+name: SmartChat
+version: 1.0.0
+main: com.smartchat.SmartChat
+api-version: 1.13
+author: SmartChat Team
+description: AI-powered chat moderation using Google Gemini
+website: https://github.com/yourusername/SmartChat
+
+commands:
+  smartchat:
+    description: Main command for SmartChat
+    aliases: [sc, chat]
+    usage: /<command> [help|reload|stats|check|appeal|history]
+  screload:
+    description: Reload SmartChat configuration
+    permission: smartchat.admin.reload
+  scstats:
+    description: View moderation statistics
+    permission: smartchat.admin.stats
+  sccheck:
+    description: Manually check a message
+    permission: smartchat.admin.check
+    usage: /<command> <message>
+  appeal:
+    description: Appeal a moderation action
+    permission: smartchat.appeal
+    usage: /<command> <reason>
+  scplayer:
+    description: View player profile and management
+    permission: smartchat.gui.players
+    usage: /<command> <player name>
+
+permissions:
+  smartchat.*:
+    description: All SmartChat permissions
+    default: op
+    children:
+      smartchat.admin.*: true
+      smartchat.bypass: true
+      smartchat.appeal: true
+  
+  smartchat.admin.*:
+    description: All admin permissions
+    default: op
+    children:
+      smartchat.admin.reload: true
+      smartchat.admin.stats: true
+      smartchat.admin.check: true
+      smartchat.admin.alerts: true
+      smartchat.admin.viewappeals: true
+      smartchat.admin.config: true
+      smartchat.gui.*: true
+  
+  smartchat.bypass:
+    description: Bypass all chat moderation
+    default: false
+  
+  smartchat.bypass.toxicity:
+    description: Bypass toxicity checks
+    default: false
+  
+  smartchat.bypass.spam:
+    description: Bypass spam checks
+    default: false
+  
+  smartchat.bypass.harassment:
+    description: Bypass harassment checks
+    default: false
+  
+  smartchat.appeal:
+    description: Submit moderation appeals
+    default: true
+  
+  smartchat.notify:
+    description: Receive moderation notifications
+    default: op
+  
+  smartchat.gui.*:
+    description: All GUI permissions
+    default: op
+    children:
+      smartchat.gui: true
+      smartchat.gui.config: true
+      smartchat.gui.players: true
+      smartchat.gui.monitor: true
+      smartchat.gui.appeals: true
+      smartchat.gui.analytics: true
+  
+  smartchat.gui:
+    description: Access to main GUI panel
+    default: op
+  
+  smartchat.gui.config:
+    description: Access to configuration GUI
+    default: op
+  
+  smartchat.gui.players:
+    description: Access to player management GUI
+    default: op
+  
+  smartchat.gui.monitor:
+    description: Access to monitoring dashboard GUI
+    default: op
+  
+  smartchat.gui.appeals:
+    description: Access to appeal review GUI
+    default: op
+  
+  smartchat.gui.analytics:
+    description: Access to analytics and reporting GUI
+    default: op

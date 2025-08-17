@@ -1,0 +1,165 @@
+prefix: "&8[&bSmartChat&8]&r "
+
+warnings:
+  first:
+    chat: "&cYour message was flagged for: &e{reason}"
+    title:
+      main: "&cWarning!"
+      sub: "&eYour message was flagged"
+    actionbar: "&c⚠ Message flagged: {reason}"
+    
+  repeated:
+    chat: "&cWarning &e{count}&c/&e{max}&c: &e{reason}"
+    title:
+      main: "&cWarning {count}/{max}"
+      sub: "&e{reason}"
+      
+  final:
+    chat: "&4&lFINAL WARNING! &cNext violation will result in punishment."
+    title:
+      main: "&4&lFINAL WARNING"
+      sub: "&cNext violation = punishment"
+    sound: "ENTITY_ENDER_DRAGON_GROWL"
+
+punishments:
+  mute:
+    applied: "&cYou have been muted for &e{duration} &cdue to: &e{reason}"
+    attempt: "&cYou are muted for &e{remaining}. &cReason: &e{reason}"
+    expired: "&aYour mute has expired. Please follow the chat rules."
+    
+  kick:
+    screen: |
+      &cYou were kicked from the server
+      
+      &7Reason: &f{reason}
+      &7Violations: &f{count}
+      
+      &7You may rejoin, but please follow the rules.
+    broadcast: "&e{player} &cwas kicked for: &e{reason}"
+    
+  ban:
+    screen: |
+      &4You have been banned from this server
+      
+      &cReason: &f{reason}
+      &cDuration: &f{duration}
+      &cExpires: &f{expiry}
+      
+      &7Appeal at: &fdiscord.gg/yourserver
+    broadcast: "&e{player} &4was banned for &e{duration} &4due to: &e{reason}"
+    permanent: |
+      &4You have been permanently banned
+      
+      &cReason: &f{reason}
+      &cViolations: &f{count}
+      
+      &7Appeal at: &fdiscord.gg/yourserver
+
+appeals:
+  submit:
+    success: "&aYour appeal has been submitted. ID: &e#{id}"
+    cooldown: "&cYou must wait &e{time} &cbefore submitting another appeal."
+    too-long: "&cYour appeal message is too long! Max: &e{max} &ccharacters."
+    
+  status:
+    pending: "&eYour appeal &7#{id} &eis pending review."
+    reviewing: "&bYour appeal &7#{id} &bis being reviewed by staff."
+    approved: "&aYour appeal &7#{id} &ahas been &lAPPROVED!"
+    denied: "&cYour appeal &7#{id} &chas been denied. Reason: &e{reason}"
+    
+  staff:
+    list-header: "&7&m--------&r &eOpen Appeals &7&m--------"
+    list-entry: "&7#{id} &8- &e{player} &8- &7{time} ago"
+    list-empty: "&7No pending appeals."
+    not-found: "&cAppeal not found: &e#{id}"
+    already-resolved: "&cThis appeal has already been resolved."
+
+staff:
+  alerts:
+    header: "&c&l[MODERATION ALERT]"
+    player: "&7Player: &e{player}"
+    severity: "&7Severity: {severity_color}{severity}"
+    message: "&7Message: &f{message}"
+    confidence: "&7AI Confidence: &e{confidence}%"
+    category: "&7Category: &e{category}"
+    action: "&7Action taken: &e{action}"
+    
+  severity:
+    low: "&a"
+    medium: "&e"
+    high: "&c"
+    extreme: "&4&l"
+    
+  actions:
+    hover: "&7Click to {action} this player"
+    mute: "&c[MUTE]"
+    kick: "&e[KICK]"
+    ban: "&4[BAN]"
+    view: "&b[VIEW]"
+    dismiss: "&7[DISMISS]"
+
+commands:
+  help:
+    header: "&7&m--------&r &bSmartChat Help &7&m--------"
+    format: "&b{command} &7- &f{description}"
+    footer: "&7Use &b/sc help <command> &7for more info"
+    
+  reload:
+    start: "&7Reloading configuration..."
+    success: "&aConfiguration reloaded successfully!"
+    error: "&cError reloading config: &e{error}"
+    
+  stats:
+    header: "&7&m--------&r &bModeration Stats &7&m--------"
+    total-analyzed: "&7Messages Analyzed: &e{count}"
+    total-flagged: "&7Messages Flagged: &e{count} &7(&e{percent}%&7)"
+    total-actions: "&7Actions Taken: &e{count}"
+    by-category: "&7{category}: &e{count}"
+    top-violators: "&7Top Violators:"
+    violator-entry: "&8 - &e{player}&7: &c{count} violations"
+    
+  check:
+    analyzing: "&7Analyzing message..."
+    result-safe: "&aMessage appears to be safe. &7(Confidence: &e{confidence}%&7)"
+    result-flagged: "&cMessage flagged! &7Category: &e{category} &7(Confidence: &e{confidence}%&7)"
+    error: "&cError analyzing message: &e{error}"
+    
+  history:
+    header: "&7&m--------&r &eViolation History: {player} &7&m--------"
+    entry: "&7{date} &8- &e{category} &8- &7{message}"
+    total: "&7Total violations: &c{count}"
+    no-history: "&aNo violations found for &e{player}"
+
+errors:
+  api:
+    offline: "&cAI moderation service is temporarily offline. Using fallback filters."
+    rate-limit: "&cRate limit reached. Please try again in a moment."
+    invalid-key: "&cInvalid API key. Please check your configuration."
+    timeout: "&cAPI request timed out. Using cached results."
+    
+  permission:
+    command: "&cYou don't have permission to use this command."
+    bypass: "&aYou have bypass permission for this moderation type."
+    
+  general:
+    player-not-found: "&cPlayer not found: &e{player}"
+    invalid-args: "&cInvalid arguments. Usage: &e{usage}"
+    database-error: "&cDatabase error occurred. Please contact an administrator."
+    config-error: "&cConfiguration error: &e{error}"
+
+languages:
+  es:
+    prefix: "&8[&bSmartChat&8]&r "
+    warnings:
+      first: "&cTu mensaje fue marcado por: &e{reason}"
+    punishments:
+      mute: "&cHas sido silenciado por &e{duration} &cdebido a: &e{reason}"
+      
+  fr:
+    prefix: "&8[&bSmartChat&8]&r "
+    warnings:
+      first: "&cVotre message a été signalé pour: &e{reason}"
+    punishments:
+      mute: "&cVous avez été muté pour &e{duration} &cen raison de: &e{reason}"
+
+placeholders:

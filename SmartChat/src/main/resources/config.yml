@@ -1,0 +1,286 @@
+gemini-api-key: PASTE_YOUR_API_KEY_HERE
+
+api:
+  endpoint: "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent"
+  
+  timeout: 10
+  
+  rate-limit: 15
+  
+  retry-attempts: 2
+  retry-delay: 1000
+  
+  cache-duration: 300
+
+thresholds:
+  toxicity: 0.60
+  
+  categories:
+    harassment: 0.60
+    hate-speech: 0.30
+    threats: 0.70
+    profanity: 0.50
+    spam: 0.75
+    adult-content: 0.80
+    
+  custom:
+    advertising: 0.75
+    caps-spam: 0.70
+    roleplay-breaking: 0.60
+
+actions:
+  low:
+    actions:
+      - "warn"
+      - "filter_message"
+    enabled: true
+    
+  medium:
+    actions:
+      - "warn"
+      - "block_message"
+      - "temp_mute"
+      - "notify_staff"
+    mute-duration: 600
+    enabled: true
+    
+  high:
+    actions:
+      - "notify_staff"
+      - "block_message"
+      - "temp_mute"
+      - "log_to_database"
+    mute-duration: 3600
+    kick-enabled: true
+    enabled: true
+    
+  extreme:
+    actions:
+      - "notify_staff"
+      - "block_message"
+      - "temp_mute"
+      - "kick"
+    mute-duration: 7200
+    ban-duration: 86400
+    enabled: true
+
+progressive-punishment:
+  enabled: true
+  
+  window: 86400
+  
+  levels:
+    1: "low"
+    3: "medium"
+    5: "high"
+    7: "extreme"
+
+filtering:
+  replacement-message: "&c[Message blocked by SmartChat]"
+  
+  show-to-staff: true
+  
+  mode: "block"
+
+overrides:
+  whitelist:
+    - "gg"
+    - "wp"
+    - "glhf"
+    
+  blacklist:
+    - "casino"
+    - "betting"
+    
+  bypass-players:
+    permissions:
+      - "smartchat.bypass"
+      - "vip.bypass"
+    uuids: []
+
+world-settings:
+  default:
+    enabled: true
+    inherit: "global"
+    
+  pvp_arena:
+    enabled: true
+    thresholds:
+      toxicity: 0.85
+      harassment: 0.80
+      
+  creative:
+    enabled: true
+    thresholds:
+      spam: 0.60
+      advertising: 0.50
+
+time-based-rules:
+  enabled: false
+  
+  peak-hours:
+    start: "15:00"
+    end: "22:00"
+    threshold-modifier: -0.1
+    
+  late-night:
+    start: "23:00"
+    end: "06:00"
+    threshold-modifier: 0.1
+
+notifications:
+  enabled: true
+  
+  methods:
+    chat: true
+    title: true
+    sound: true
+    actionbar: false
+    
+  sound:
+    type: "BLOCK_NOTE_BLOCK_PLING"
+    volume: 1.0
+    pitch: 1.5
+    
+  min-severity: "medium"
+  
+  cooldown: 30
+
+appeals:
+  enabled: true
+  
+  cooldown: 3600
+  
+  max-length: 200
+  
+  auto-review:
+    enabled: true
+    confidence-threshold: 0.60
+
+database:
+  retention:
+    violations: 30
+    appeals: 90
+    analytics: 365
+    messages: 7
+    
+  auto-cleanup:
+    enabled: true
+    time: "03:00"
+    
+  backup:
+    enabled: true
+    interval: 7
+    keep-backups: 4
+
+ai-prompts:
+  analysis: |
+    You are an advanced AI chat moderator for Minecraft. Analyze this message with extreme precision.
+    
+    MESSAGE: "{message}"
+    PLAYER: {player}
+    CONTEXT: {context}
+    RECENT_VIOLATIONS: {recent_violations}
+    
+    DETECTION PRIORITIES (be extremely strict):
+    1. Racial slurs (ANY variation, substitution, or spacing)
+    2. Hate speech targeting any group
+    3. Sexual content and severe profanity
+    4. Harassment and threats
+    5. Spam patterns
+    
+    BYPASS DETECTION - Flag these patterns:
+    • Character substitution: n!gger, f4ggot, sh!t, b!tch, @ss
+    • Spacing/dots: n.i.g.g.e.r, f a g, s h i t
+    • Leetspeak: n166er, f499ot, 5h1t
+    • Misspellings: nig3r, fagot, shiit
+    • Unicode/special chars: ñiggér, fäggot
+    • Partial words: nig, fag followed by context
+    
+    LEARNING COMPONENT: If you see new variations of known bad words, rate them as severely as the original.
+    
+    SCORING (0.0-1.0):
+    toxicity: [score]
+    harassment: [score]
+    spam: [score]
+    profanity: [score]
+    hate-speech: [score]
+    
+    CRITICAL RULES:
+    - ANY racial slur variant = 1.0 across all categories
+    - Sexual/severe profanity = 0.95+
+    - Harassment/threats = 0.9+
+    - Regular swears = 0.8+
+    - If uncertain, ALWAYS score higher
+    
+    Respond ONLY with scores in this format:
+    toxicity: 1.0
+    harassment: 0.9
+    spam: 0.1
+    profanity: 1.0
+    hate-speech: 1.0
+    
+  server-type: "general"
+
+performance:
+  async-processing: true
+  
+  thread-pool-size: 2
+  
+  queue-size: 100
+  
+  batch:
+    enabled: true
+    size: 5
+    delay: 1000
+
+integrations:
+  discord:
+    enabled: false
+    webhook-url: ""
+    min-severity: "high"
+    
+  plugins:
+    luckperms:
+      enabled: true
+      bypass-groups:
+        - "vip"
+        - "staff"
+
+debug:
+  enabled: false
+  
+  log-api: false
+  
+  log-decisions: true
+  
+  file-logging: true
+
+messages:
+  prefix: "&8[&bSmartChat&8]&r "
+  
+  warnings:
+    first: "&cYour message was flagged for: &e{reason}"
+    repeated: "&cWarning {count}/{max}: &e{reason}"
+    final: "&4Final warning! Next violation will result in punishment."
+    
+  punishments:
+    muted: "&cYou have been muted for &e{duration} &cdue to: &e{reason}"
+    kicked: "&cYou were kicked for: &e{reason}"
+    banned: "&4You have been banned for &e{duration} &4due to: &e{reason}"
+    
+  appeals:
+    submitted: "&aYour appeal has been submitted. ID: &e{id}"
+    cooldown: "&cYou must wait &e{time} &cbefore submitting another appeal."
+    approved: "&aYour appeal #{id} has been approved!"
+    denied: "&cYour appeal #{id} has been denied. Reason: &e{reason}"
+    
+  staff:
+    alert: "&c[ALERT] &e{player} &c- {severity}: &f{message}"
+    flagged: "&7Original: &f{original}"
+    confidence: "&7Confidence: &e{score}% &7| Category: &e{category}"
+    
+  errors:
+    api-down: "&cAI moderation temporarily unavailable. Using fallback filters."
+    no-permission: "&cYou don't have permission to use this command."
+    player-not-found: "&cPlayer not found: &e{player}"
